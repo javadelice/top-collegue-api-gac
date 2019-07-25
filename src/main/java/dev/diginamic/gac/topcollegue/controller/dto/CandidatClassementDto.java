@@ -3,7 +3,7 @@ package dev.diginamic.gac.topcollegue.controller.dto;
 import java.util.Objects;
 
 public class CandidatClassementDto {
-    private String pictureurl;
+    private String pictureUrl;
     private String lastName;
     private String firstName;
     private Integer score;
@@ -11,19 +11,19 @@ public class CandidatClassementDto {
     public CandidatClassementDto() {
     }
 
-    public CandidatClassementDto(String pictureurl, String lastName, String firstName, Integer score) {
-        this.pictureurl = pictureurl;
+    public CandidatClassementDto(String pictureUrl, String lastName, String firstName, Integer score) {
+        this.pictureUrl = pictureUrl;
         this.lastName = lastName;
         this.firstName = firstName;
         this.score = score;
     }
 
-    public String getPictureurl() {
-        return pictureurl;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
-    public void setPictureurl(String pictureurl) {
-        this.pictureurl = pictureurl;
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
     public String getLastName() {
@@ -53,7 +53,7 @@ public class CandidatClassementDto {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("CandidatClassement{");
-        sb.append("pictureurl='").append(pictureurl).append('\'');
+        sb.append("pictureurl='").append(pictureUrl).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", score=").append(score);
@@ -66,7 +66,7 @@ public class CandidatClassementDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CandidatClassementDto that = (CandidatClassementDto) o;
-        return Objects.equals(pictureurl, that.pictureurl) &&
+        return Objects.equals(pictureUrl, that.pictureUrl) &&
                 Objects.equals(lastName, that.lastName) &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(score, that.score);
@@ -74,6 +74,6 @@ public class CandidatClassementDto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(pictureurl, lastName, firstName, score);
+        return Objects.hash(pictureUrl, lastName, firstName, score);
     }
 }

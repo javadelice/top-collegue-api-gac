@@ -28,7 +28,7 @@ public class CollegueService {
 
         return candidats.stream()
                 .map(collegue -> {
-                    Integer score = 0;
+                    int score = 0;
                     List<Vote> votesCandidat = votes.stream()
                             .filter(vote -> vote.getCle().getCandidate().equals(collegue))
                             .collect(Collectors.toList());
@@ -37,6 +37,7 @@ public class CollegueService {
                     }
                     return new CandidatClassementDto(collegue.getPictureUrl(), collegue.getLastName(), collegue.getFirstName(), score);
                 })
+                .sorted((candidat1, candidat2) -> candidat2.getScore() - candidat1.getScore())
                 .collect(Collectors.toList());
     }
 }
