@@ -3,10 +3,6 @@ package dev.diginamic.gac.topcollegue.util;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import dev.diginamic.gac.topcollegue.domain.Collegue;
@@ -15,20 +11,20 @@ import dev.diginamic.gac.topcollegue.domain.Collegue;
 public class ClePrimaireComposite implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
 
     @ManyToOne
     private Collegue judge;
     @ManyToOne
     private Collegue candidate;
 
-//    public Integer getIdCle() {
-//        return idCle;
-//    }
-//
-//    public void setIdCle(Integer idCle) {
-//        this.idCle = idCle;
-//    }
+    public ClePrimaireComposite() {
+    }
+
+    public ClePrimaireComposite(Collegue judge, Collegue candidate) {
+        super();
+        this.judge = judge;
+        this.candidate = candidate;
+    }
 
     public Collegue getJudge() {
         return judge;

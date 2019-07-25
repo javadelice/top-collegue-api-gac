@@ -1,9 +1,5 @@
 package dev.diginamic.gac.topcollegue.domain;
 
-import java.util.List;
-
-//import java.util.Objects;
-
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
@@ -18,39 +14,15 @@ public class Vote {
     @EmbeddedId
     protected ClePrimaireComposite cle = new ClePrimaireComposite();
 
-//    private Collegue judge;
-//    private Collegue candidate;
     private Boolean score;
 
     public Vote() {
     }
 
-    public Vote(ClePrimaireComposite cle, Boolean score, List<Collegue> collegue) {
+    public Vote(ClePrimaireComposite cle, Boolean score) {
         this.cle = cle;
         this.score = score;
     }
-
-//    public Vote(Collegue judge, Collegue candidate, Boolean score) {
-//        this.judge = judge;
-//        this.candidate = candidate;
-//        this.score = score;
-//    }
-
-//    public Collegue getJudge() {
-//        return judge;
-//    }
-
-//    public void setJudge(Collegue judge) {
-//        this.judge = judge;
-//    }
-
-//    public Collegue getCandidate() {
-//        return candidate;
-//    }
-
-//    public void setCandidate(Collegue candidate) {
-//        this.candidate = candidate;
-//    }
 
     public Boolean getScore() {
         return score;
