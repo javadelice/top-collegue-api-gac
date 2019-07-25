@@ -69,17 +69,21 @@ public class AuthController {
 				HttpEntity<UserDto> entity = new HttpEntity<>(headers);
 				UserDto user = restTemplate.exchange(API_URL + "/me", HttpMethod.GET, entity, UserDto.class).getBody();
 
-				// Creation d'un collegue a partir des donnees du /me
-				Collegue collegue = new Collegue(user.getMatricule(), user.getUsername(), passwordEncoder.encode(infos.getPassword()), user.getPictureUrl(), user.getLastName(), user.getFirstName());
+				// On ne prend pas en compte les utilisateurs qui ne sont pas des collegues
+				if(user != null && user.getMatricule() != null) {
 
-				// Maj de la photo si besoin
-				if(infos.getPictureUrl() != null && !infos.getPictureUrl().equals("")) {
-					collegue.setPictureUrl(infos.getPictureUrl());
+					// Creation d'un collegue a partir des donnees du /me
+					Collegue collegue = new Collegue(user.getMatricule(), user.getUsername(), passwordEncoder.encode(infos.getPassword()), user.getPictureUrl(), user.getLastName(), user.getFirstName());
+
+					// Maj de la photo si besoin
+					if (infos.getPictureUrl() != null && !infos.getPictureUrl().equals("")) {
+						collegue.setPictureUrl(infos.getPictureUrl());
+					}
+
+					// sauvegarde dans la base, puis mise au format optionnal pour la suite
+					collegueRepository.save(collegue);
+					optionnalCollegue = Optional.of(collegue);
 				}
-
-				// sauvegarde dans la base, puis mise au format optionnal pour la suite
-				collegueRepository.save(collegue);
-				optionnalCollegue = Optional.of(collegue);
 
 			} catch (HttpClientErrorException e) {
 				// en cas d'erreur http vers le second back, la connexion echouera (401 - unauthorized)
