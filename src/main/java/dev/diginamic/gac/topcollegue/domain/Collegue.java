@@ -2,8 +2,20 @@ package dev.diginamic.gac.topcollegue.domain;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Collegue {
+    
+    @Id
+    //matricule
     private String id;
+    
+    @Column(name = "Login")
     private String username;
     private String password;
     private String pictureUrl;
