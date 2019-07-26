@@ -4,22 +4,28 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import dev.diginamic.gac.topcollegue.controller.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
+import dev.diginamic.gac.topcollegue.controller.dto.UserDto;
 import dev.diginamic.gac.topcollegue.domain.Collegue;
+import dev.diginamic.gac.topcollegue.exception.ErrorConnectionPicture;
 import dev.diginamic.gac.topcollegue.persistence.CollegueRepository;
 import dev.diginamic.gac.topcollegue.service.CollegueService;
 import io.jsonwebtoken.Jwts;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
 @CrossOrigin(allowCredentials = "true")
 @RestController
@@ -52,7 +58,7 @@ public class AuthController {
 	}
 
 	@PostMapping(value = "/auth")
-	public ResponseEntity<?> authenticate(@RequestBody Collegue infos) {
+	public ResponseEntity<?> authenticate(@RequestBody Collegue infos) throws ErrorConnectionPicture {
 		Optional<Collegue> optionnalCollegue = this.collegueRepository.findByUsername(infos.getUsername());
 
 		// Recherche dans le deuxieme back si le collegue n'existe pas (collegue-api)
@@ -70,14 +76,23 @@ public class AuthController {
 				UserDto user = restTemplate.exchange(API_URL + "/me", HttpMethod.GET, entity, UserDto.class).getBody();
 
 				// On ne prend pas en compte les utilisateurs qui ne sont pas des collegues
-				if(user != null && user.getMatricule() != null) {
+				if (user != null && user.getMatricule() != null) {
 
 					// Creation d'un collegue a partir des donnees du /me
-					Collegue collegue = new Collegue(user.getMatricule(), user.getUsername(), passwordEncoder.encode(infos.getPassword()), user.getPictureUrl(), user.getLastName(), user.getFirstName());
+					Collegue collegue = new Collegue(user.getMatricule(), user.getUsername(), passwordEncoder.encode(infos.getPassword()),
+					        user.getPictureUrl(), user.getLastName(), user.getFirstName());
 
 					// Maj de la photo si besoin
-					if (infos.getPictureUrl() != null && !infos.getPictureUrl().equals("")) {
+					if (infos.getPictureUrl() != null && !infos.getPictureUrl().equals("") && infos.getPictureUrl().startsWith("http")
+					        && (infos.getPictureUrl().endsWith(".jpg") || infos.getPictureUrl().endsWith(".png"))) {
+
 						collegue.setPictureUrl(infos.getPictureUrl());
+					}
+
+					// Envoie d'une erreur si la personne n'entre pas une photo conforme
+
+					else if (infos.getPictureUrl() != null || "".equals(infos.getPictureUrl())) {
+						throw new ErrorConnectionPicture("La photo doit commencer par http et se terminer par .png ou .jpg");
 					}
 
 					// sauvegarde dans la base, puis mise au format optionnal pour la suite
@@ -86,10 +101,10 @@ public class AuthController {
 				}
 
 			} catch (HttpClientErrorException e) {
-				// en cas d'erreur http vers le second back, la connexion echouera (401 - unauthorized)
+				// en cas d'erreur http vers le second back, la connexion echouera (401 -
+				// unauthorized)
 			}
 		}
-
 
 		return optionnalCollegue
 		        .filter(utilisateur -> passwordEncoder.matches(infos.getPassword(), utilisateur.getPassword()))

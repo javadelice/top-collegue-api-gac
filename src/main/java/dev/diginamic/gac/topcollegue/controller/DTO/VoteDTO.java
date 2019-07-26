@@ -1,14 +1,14 @@
 package dev.diginamic.gac.topcollegue.controller.dto;
 
-public class VoteDTO {
+public class VoteDto {
 
     private String idCandidate;
     private boolean score;
 
-    public VoteDTO() {
-    }
+	public VoteDto() {
+	}
 
-    public VoteDTO(String idCandidate, boolean score) {
+    public VoteDto(String idCandidate, boolean score) {
         this.idCandidate = idCandidate;
         this.score = score;
     }
@@ -17,17 +17,17 @@ public class VoteDTO {
         return idCandidate;
     }
 
-    public void setIdCandidate(String idCandidate) {
-        this.idCandidate = idCandidate;
-    }
+	public void setIdCandidate(String idCandidate) {
+		this.idCandidate = idCandidate;
+	}
 
-    public boolean isScore() {
-        return score;
-    }
+	public boolean isScore() {
+		return score;
+	}
 
-    public void setScore(boolean score) {
-        this.score = score;
-    }
+	public void setScore(boolean score) {
+		this.score = score;
+	}
 
     @Override
     public int hashCode() {
@@ -46,7 +46,7 @@ public class VoteDTO {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        VoteDTO other = (VoteDTO) obj;
+        VoteDto other = (VoteDto) obj;
         if (idCandidate == null) {
             if (other.idCandidate != null)
                 return false;
@@ -56,5 +56,4 @@ public class VoteDTO {
             return false;
         return true;
     }
-
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import dev.diginamic.gac.topcollegue.controller.dto.CandidatClassementDto;
 import dev.diginamic.gac.topcollegue.controller.dto.CandidatVoteDto;
-import dev.diginamic.gac.topcollegue.controller.dto.VoteDTO;
+import dev.diginamic.gac.topcollegue.controller.dto.VoteDto;
 import dev.diginamic.gac.topcollegue.domain.Collegue;
 import dev.diginamic.gac.topcollegue.domain.Vote;
 import dev.diginamic.gac.topcollegue.exception.CollegueNotFound;
@@ -29,9 +29,6 @@ public class CollegueService {
     @Autowired
     private VoteRepository voteRepository;
 
-    public CollegueService() {
-    }
-
     public Collegue rechercherById(String id) throws CollegueNotFound {
         Optional<Collegue> collOpt = collegueRepository.findById(id);
         return collOpt.orElseThrow(() -> new CollegueNotFound("Collegue non trouvé"));
@@ -45,7 +42,7 @@ public class CollegueService {
      * @param score est un booleen
      * @return un nouveau vote constitué des collegue et du score
      */
-    public VoteDTO voter(VoteDTO vote, String usernameJudge) {
+    public VoteDto voter(VoteDto vote, String usernameJudge) {
         Vote unVote = new Vote();
         ClePrimaireComposite cle = new ClePrimaireComposite();
         cle.setJudge(collegueRepository.findByUsername(usernameJudge).get());

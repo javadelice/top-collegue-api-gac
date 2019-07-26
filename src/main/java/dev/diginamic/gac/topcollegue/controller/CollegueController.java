@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.diginamic.gac.topcollegue.controller.dto.CandidatClassementDto;
 import dev.diginamic.gac.topcollegue.controller.dto.CandidatVoteDto;
-import dev.diginamic.gac.topcollegue.controller.dto.VoteDTO;
+import dev.diginamic.gac.topcollegue.controller.dto.VoteDto;
 import dev.diginamic.gac.topcollegue.domain.Collegue;
 import dev.diginamic.gac.topcollegue.service.CollegueService;
 
@@ -24,13 +24,8 @@ public class CollegueController {
     @Autowired
     private CollegueService collegueService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String helloWorld() {
-        return "Hello World";
-    }
-
     @RequestMapping(method = RequestMethod.POST, path = "/vote")
-    public VoteDTO voter(@RequestBody VoteDTO vote) {
+    public VoteDto voter(@RequestBody VoteDto vote) {
        return collegueService.voter(vote, SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
