@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-import dev.diginamic.gac.topcollegue.controller.DTO.AccountDto;
+import dev.diginamic.gac.topcollegue.controller.dto.AccountDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.ContextRefreshedEvent;

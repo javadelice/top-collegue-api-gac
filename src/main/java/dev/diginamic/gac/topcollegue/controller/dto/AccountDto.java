@@ -1,4 +1,4 @@
-package dev.diginamic.gac.topcollegue.controller.DTO;
+package dev.diginamic.gac.topcollegue.controller.dto;
 
 public class AccountDto {
     private String email;
