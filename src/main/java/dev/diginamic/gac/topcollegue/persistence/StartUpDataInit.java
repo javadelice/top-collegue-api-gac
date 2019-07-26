@@ -39,31 +39,12 @@ public class StartUpDataInit {
 
     @EventListener(ContextRefreshedEvent.class)
     public void init() {
-        Collegue collegue1 = new Collegue(UUID.randomUUID().toString(), "clement", passwordEncoder.encode("clement"),
-                "https://vignette.wikia.nocookie.net/jjba/images/7/7f/Spice_Girl_infobox.png/revision/latest/scale-to-width-down/310?cb=20180517101701&path-prefix=fr",
-                "Ormaux", "Clement");
-        collRepository.save(collegue1);
 
-        Collegue collegue2 = new Collegue(UUID.randomUUID().toString(), "adrien", passwordEncoder.encode("adrien"),
-                "https://vignette.wikia.nocookie.net/jjba/images/9/9f/Crazy_Diamond_Manga.Infobox.png/revision/latest/scale-to-width-down/310?cb=20180622215653&path-prefix=fr",
-                "Chauvin", "Adrien");
-        collRepository.save(collegue2);
 
-        collRepository.save(new Collegue(UUID.randomUUID().toString(), "glen", passwordEncoder.encode("glen"),
-                "https://vignette.wikia.nocookie.net/jjba/images/1/14/Gold_Experience_color.png/revision/latest?cb=20180417125730&path-prefix=fr",
-                "Ollivier", "Glen"));
+        collRepository.save(new Collegue(UUID.randomUUID().toString(), "sega.sylla@gmail.com", passwordEncoder.encode("Sega"),
+                "https://pbs.twimg.com/profile_images/1956226260/image.jpg",
+                "SYLLA", "Sega"));
 
-        Vote vote1 = new Vote(new ClePrimaireComposite(collegue1, collegue2), false);
-        voteRepository.save(vote1);
-
-//        Vote vote2 = new Vote(new ClePrimaireComposite(collegue2, collegue1), false);
-//        voteRepository.save(vote2);
-//
-//        Vote vote3 = new Vote(new ClePrimaireComposite(collegue1.getId(), collegue2.getId()), true);
-//        voteRepository.save(vote3);
-//
-//        Vote vote4 = new Vote(new ClePrimaireComposite(collegue2.getId(), collegue1.getId()), false);
-//        voteRepository.save(vote4);
 
         RestTemplate restTemplate = new RestTemplate();
         List<String> cookies = restTemplate.postForEntity(API_URL + "/auth", new Collegue("", "root", "proot", "", "", ""), String.class).getHeaders().get("Set-Cookie");
@@ -78,7 +59,7 @@ public class StartUpDataInit {
 
         accounts.stream()
                 .forEach(account -> {
-                    if (r.nextBoolean()) {
+                    if (r.nextBoolean() && !account.get("firstName").equals("Rossi")) {
 
                         List<String> cookiesAccount = restTemplate.postForEntity(API_URL + "/auth", new Collegue("", account.get("email"), account.get("firstName"), "", "", ""), String.class).getHeaders().get("Set-Cookie");
                         String cookieAccount = cookiesAccount.get(0).substring(0, cookiesAccount.get(0).indexOf(';'));
@@ -107,7 +88,6 @@ public class StartUpDataInit {
                 }
             })
         );
-
     }
 
 }
