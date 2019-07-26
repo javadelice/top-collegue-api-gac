@@ -1,7 +1,10 @@
 package dev.diginamic.gac.topcollegue.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import dev.diginamic.gac.topcollegue.controller.DTO.CandidatVoteDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,4 +54,28 @@ public class CollegueService {
         return vote;
     }
 
+    public List<CandidatVoteDto> getCandidats(String username) {
+
+        Collegue user = collRepository.findByUsername(username).get();
+        List<Vote> votes = voteRepository.findAll().stream()
+                .filter(vote -> vote.getKey().getJudge().equals(user))
+                .collect(Collectors.toList());
+
+        return collRepository.findAll().stream()
+                .map(collegue -> {
+                    CandidatVoteDto candidate = new CandidatVoteDto();
+                    candidate.setId(collegue.getId());
+                    candidate.setLastName(collegue.getLastName());
+                    candidate.setFirstName(collegue.getFirstName());
+                    candidate.setPictureUrl(collegue.getPictureUrl());
+
+                    for(int i = 0; i < votes.size(); i++) {
+                        if (votes.get(i).getKey().getCandidate().equals(collegue)) {
+                            candidate.setScore(votes.get(i).getScore());
+                        }
+                    }
+                    return candidate;
+                })
+                .collect(Collectors.toList());
+    }
 }

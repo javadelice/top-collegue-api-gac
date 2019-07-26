@@ -9,5 +9,6 @@ import dev.diginamic.gac.topcollegue.domain.Collegue;
 public interface CollegueRepository extends JpaRepository<Collegue, String> {
 
     public Optional<Collegue> findById(String id);
+    public Optional<Collegue> findByUsername(String username);
 
 }
