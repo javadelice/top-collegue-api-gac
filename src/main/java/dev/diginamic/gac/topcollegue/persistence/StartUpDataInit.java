@@ -17,7 +17,7 @@ public class StartUpDataInit {
 
     @Autowired
     private CollegueRepository collRepository;
-    
+
     @Autowired
     private VoteRepository voteRepository;
 
@@ -35,22 +35,22 @@ public class StartUpDataInit {
                 "https://vignette.wikia.nocookie.net/jjba/images/9/9f/Crazy_Diamond_Manga.Infobox.png/revision/latest/scale-to-width-down/310?cb=20180622215653&path-prefix=fr",
                 "Chauvin", "Adrien");
         collRepository.save(collegue2);
-        
+
         collRepository.save(new Collegue(UUID.randomUUID().toString(), "glen", passwordEncoder.encode("glen"),
                 "https://vignette.wikia.nocookie.net/jjba/images/1/14/Gold_Experience_color.png/revision/latest?cb=20180417125730&path-prefix=fr",
                 "Ollivier", "Glen"));
-        
-        
-        
-        Vote vote1 = new Vote(new ClePrimaireComposite(collegue1,collegue2), false);
+
+        Vote vote1 = new Vote(new ClePrimaireComposite(collegue1, collegue2), false);
         voteRepository.save(vote1);
-        
-        Vote vote2 = new Vote(new ClePrimaireComposite(collegue2,collegue1), false);
-        voteRepository.save(vote2);
-        
-        Vote vote3 = new Vote(new ClePrimaireComposite(collegue1,collegue2), true);
-        voteRepository.save(vote3);
-        
+
+//        Vote vote2 = new Vote(new ClePrimaireComposite(collegue2, collegue1), false);
+//        voteRepository.save(vote2);
+//
+//        Vote vote3 = new Vote(new ClePrimaireComposite(collegue1.getId(), collegue2.getId()), true);
+//        voteRepository.save(vote3);
+//
+//        Vote vote4 = new Vote(new ClePrimaireComposite(collegue2.getId(), collegue1.getId()), false);
+//        voteRepository.save(vote4);
     }
 
 }

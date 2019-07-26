@@ -12,15 +12,15 @@ import dev.diginamic.gac.topcollegue.util.ClePrimaireComposite;
 public class Vote {
 
     @EmbeddedId
-    protected ClePrimaireComposite cle = new ClePrimaireComposite();
+    protected ClePrimaireComposite key = new ClePrimaireComposite();
 
     private Boolean score;
 
     public Vote() {
     }
 
-    public Vote(ClePrimaireComposite cle, Boolean score) {
-        this.cle = cle;
+    public Vote(ClePrimaireComposite key, Boolean score) {
+        this.key = key;
         this.score = score;
     }
 
@@ -28,12 +28,12 @@ public class Vote {
         return score;
     }
 
-    public ClePrimaireComposite getCle() {
-        return cle;
+    public ClePrimaireComposite getKey() {
+        return key;
     }
 
-    public void setCle(ClePrimaireComposite cle) {
-        this.cle = cle;
+    public void setKey(ClePrimaireComposite key) {
+        this.key = key;
     }
 
     public void setScore(Boolean score) {
@@ -44,7 +44,7 @@ public class Vote {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((cle == null) ? 0 : cle.hashCode());
+        result = prime * result + ((key == null) ? 0 : key.hashCode());
         result = prime * result + ((score == null) ? 0 : score.hashCode());
         return result;
     }
@@ -58,10 +58,10 @@ public class Vote {
         if (getClass() != obj.getClass())
             return false;
         Vote other = (Vote) obj;
-        if (cle == null) {
-            if (other.cle != null)
+        if (key == null) {
+            if (other.key != null)
                 return false;
-        } else if (!cle.equals(other.cle))
+        } else if (!key.equals(other.key))
             return false;
         if (score == null) {
             if (other.score != null)
@@ -74,8 +74,8 @@ public class Vote {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Vote [cle=");
-        builder.append(cle);
+        builder.append("Vote [key=");
+        builder.append(key);
         builder.append(", score=");
         builder.append(score);
         builder.append("]");

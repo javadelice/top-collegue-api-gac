@@ -10,11 +10,11 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class Collegue {
-    
+
     @Id
-    //matricule
+    // matricule
     private String id;
-    
+
     @Column(name = "Login")
     private String username;
     private String password;
@@ -84,8 +84,10 @@ public class Collegue {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Collegue collegue = (Collegue) o;
         return Objects.equals(id, collegue.id);
     }

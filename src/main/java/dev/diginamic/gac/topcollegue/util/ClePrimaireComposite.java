@@ -11,23 +11,22 @@ import dev.diginamic.gac.topcollegue.domain.Collegue;
 public class ClePrimaireComposite implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @ManyToOne
     private Collegue judge;
     @ManyToOne
     private Collegue candidate;
 
+    public Collegue getJudge() {
+        return judge;
+    }
+
     public ClePrimaireComposite() {
     }
 
     public ClePrimaireComposite(Collegue judge, Collegue candidate) {
-        super();
         this.judge = judge;
         this.candidate = candidate;
-    }
-
-    public Collegue getJudge() {
-        return judge;
     }
 
     public void setJudge(Collegue judge) {
