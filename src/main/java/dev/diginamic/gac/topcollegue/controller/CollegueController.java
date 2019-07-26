@@ -1,25 +1,21 @@
 package dev.diginamic.gac.topcollegue.controller;
 
-import dev.diginamic.gac.topcollegue.controller.DTO.CandidatVoteDto;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import dev.diginamic.gac.topcollegue.controller.dto.CandidatClassementDto;
-import dev.diginamic.gac.topcollegue.service.CollegueService;
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.diginamic.gac.topcollegue.controller.DTO.VoteDTO;
+import dev.diginamic.gac.topcollegue.controller.dto.CandidatClassementDto;
+import dev.diginamic.gac.topcollegue.controller.dto.CandidatVoteDto;
+import dev.diginamic.gac.topcollegue.controller.dto.VoteDTO;
 import dev.diginamic.gac.topcollegue.domain.Collegue;
-import dev.diginamic.gac.topcollegue.exception.CollegueNotFound;
-
-import java.util.List;
+import dev.diginamic.gac.topcollegue.service.CollegueService;
 
 @CrossOrigin(allowCredentials = "true")
 @RestController
@@ -35,7 +31,7 @@ public class CollegueController {
 
     @RequestMapping(method = RequestMethod.POST, path = "/vote")
     public VoteDTO voter(@RequestBody VoteDTO vote) {
-       return collegueService.voter(vote);
+       return collegueService.voter(vote, SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "votes")

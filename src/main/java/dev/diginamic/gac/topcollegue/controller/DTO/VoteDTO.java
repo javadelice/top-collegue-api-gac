@@ -1,26 +1,16 @@
-package dev.diginamic.gac.topcollegue.controller.DTO;
+package dev.diginamic.gac.topcollegue.controller.dto;
 
 public class VoteDTO {
 
-    private String idJudge;
     private String idCandidate;
     private boolean score;
 
     public VoteDTO() {
     }
 
-    public VoteDTO(String idJudge, String idCandidate, boolean score) {
-        this.idJudge = idJudge;
+    public VoteDTO(String idCandidate, boolean score) {
         this.idCandidate = idCandidate;
         this.score = score;
-    }
-
-    public String getIdJudge() {
-        return idJudge;
-    }
-
-    public void setIdJudge(String idJudge) {
-        this.idJudge = idJudge;
     }
 
     public String getIdCandidate() {
@@ -44,7 +34,6 @@ public class VoteDTO {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((idCandidate == null) ? 0 : idCandidate.hashCode());
-        result = prime * result + ((idJudge == null) ? 0 : idJudge.hashCode());
         result = prime * result + (score ? 1231 : 1237);
         return result;
     }
@@ -62,11 +51,6 @@ public class VoteDTO {
             if (other.idCandidate != null)
                 return false;
         } else if (!idCandidate.equals(other.idCandidate))
-            return false;
-        if (idJudge == null) {
-            if (other.idJudge != null)
-                return false;
-        } else if (!idJudge.equals(other.idJudge))
             return false;
         if (score != other.score)
             return false;
