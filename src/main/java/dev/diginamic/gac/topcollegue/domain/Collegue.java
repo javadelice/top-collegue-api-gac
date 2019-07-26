@@ -1,3 +1,4 @@
+
 package dev.diginamic.gac.topcollegue.domain;
 
 import java.util.Objects;
@@ -10,7 +11,6 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class Collegue {
-
     @Id
     // matricule
     private String id;

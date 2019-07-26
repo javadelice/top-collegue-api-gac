@@ -2,7 +2,11 @@ package dev.diginamic.gac.topcollegue.controller;
 
 import dev.diginamic.gac.topcollegue.controller.DTO.CandidatVoteDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
+
+import dev.diginamic.gac.topcollegue.controller.dto.CandidatClassementDto;
+import dev.diginamic.gac.topcollegue.service.CollegueService;
+import java.util.Optional;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.diginamic.gac.topcollegue.controller.DTO.VoteDTO;
 import dev.diginamic.gac.topcollegue.domain.Collegue;
-import dev.diginamic.gac.topcollegue.domain.Vote;
 import dev.diginamic.gac.topcollegue.exception.CollegueNotFound;
-import dev.diginamic.gac.topcollegue.service.CollegueService;
 
 import java.util.List;
 
@@ -24,25 +26,33 @@ import java.util.List;
 public class CollegueController {
 
     @Autowired
-    CollegueService lesCollegues;
+    private CollegueService collegueService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String helloWorld() {
         return "Hello World";
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
-    public Collegue rechercherParMatricule(@PathVariable String id) throws CollegueNotFound {
-        return lesCollegues.rechercherById(id);
-    }
-
     @RequestMapping(method = RequestMethod.POST, path = "/vote")
     public VoteDTO voter(@RequestBody VoteDTO vote) {
-       return lesCollegues.voter(vote);
+       return collegueService.voter(vote);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "votes")
     public List<CandidatVoteDto> getCandidats() {
-        return lesCollegues.getCandidats(SecurityContextHolder.getContext().getAuthentication().getName());
+        return collegueService.getCandidats(SecurityContextHolder.getContext().getAuthentication().getName());
     }
+
+    @RequestMapping(
+            path = "classement",
+            method = RequestMethod.GET
+    )
+    public List<CandidatClassementDto> classement() {
+        return collegueService.getClassement();
+    }
+
+	@RequestMapping(method = RequestMethod.GET, path = "/me")
+	public Optional<Collegue> retourneCollegue() {
+		return collegueService.rechercheParUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+	}
 }
